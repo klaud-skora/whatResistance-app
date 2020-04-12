@@ -22,8 +22,8 @@ class StripeState extends State<Stripe> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 44.0,
-      width: 6.0,
+      height: 64.0,
+      width: 10.0,
       child: FlatButton(
         shape: RoundedRectangleBorder(),
         color: dotColor == null ? widget.color : dotColor,

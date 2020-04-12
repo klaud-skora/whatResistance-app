@@ -18,7 +18,7 @@ class HomePageState extends State<HomePage> {
         backgroundColor: Color(0xff58BF9F),
       ),
       body: Container(
-        color: Color(0xff7bff9f),
+        color: Color(0xffb8e994),
         padding: const EdgeInsets.all(20.0),
         alignment: Alignment.center,
         child: Column(
@@ -34,7 +34,7 @@ class HomePageState extends State<HomePage> {
             SizedBox(height: 12.0),
             Text('Choose proper colors relevant to your resistor right below'),
             Container(
-              padding: const EdgeInsets.only(top: 60.0, left: 90.0),
+              padding: const EdgeInsets.only(top: 60.0),
               child: Resistor(),
             ),
           ],
