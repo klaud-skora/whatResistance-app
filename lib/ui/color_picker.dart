@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/logic/calculator.dart';
 
 class Dot extends StatelessWidget {
 
@@ -21,7 +22,7 @@ class Dot extends StatelessWidget {
 }
 
 class ColorPicker extends StatelessWidget {
-  final int stripe;
+  final String stripe;
   ColorPicker({this.stripe});
   
   @override
@@ -43,19 +44,8 @@ class ColorPicker extends StatelessWidget {
             Wrap(
               spacing: 8.0,
               runSpacing: 8.0, 
-              children: <Widget>[
-                Dot(color: Colors.black),
-                Dot(color: Colors.brown),
-                Dot(color: Colors.red),
-                Dot(color: Colors.orange),
-                Dot(color: Colors.yellow),
-                Dot(color: Colors.green),
-                Dot(color: Colors.blue),
-                Dot(color: Color(0xff6D214F)),
-                Dot(color: Colors.grey),
-                Dot(color: Colors.white),
-                Dot(color: Color(0xffEAB543)),
-                Dot(color: Colors.grey[600]),
+              children: [
+                for(Line line in Line.values) Dot(color: line.color),
               ],
             ),
           ],

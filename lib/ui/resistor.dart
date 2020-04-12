@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'stripe.dart';
+import 'package:my_app/logic/calculator.dart';
+import 'color_picker.dart';
 
 class Resistor extends StatefulWidget {
   
@@ -9,20 +10,47 @@ class Resistor extends StatefulWidget {
 
 class ResistorState extends State<Resistor> {
   bool switchOn = false;
+  Color first = Color(0xff1b5e20);
+  Color second = Color(0xff0d47a1);
+  Color third = Color(0xff6d214f);
+  Color multiplierColor = Color(0xffffeb3b); 
+  Color toleranceColor = Color(0xff9e9e9e);
+
+  changeColor(BuildContext context, stripe, color) async {
+    final stripeCol = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ColorPicker(stripe: stripe)),
+    );
+    setState(() { 
+      if(color == first) {
+        first = stripeCol;
+      } else if(color == second) {
+        second = stripeCol;
+      } else if(color == third) {
+        third = stripeCol;
+      } else if(color == multiplierColor) {
+        multiplierColor = stripeCol;
+      } else if(color == toleranceColor) {
+        toleranceColor = stripeCol;
+      }
+    });
+ }  
 
   @override
   Widget build(BuildContext context) {
-    var resistorBackground = Color(0xffBDC581);
-    print(switchOn);
+    Color resistorBackground = Color(0xffBDC581);
+    var no3 = switchOn ? third : null;
+    var result = getData(first, second, no3, multiplierColor, toleranceColor);
+    
+    
+    
     return Container(
       child: Column(
         children: <Widget>[
-          Text('Swicth for 5-band-code'),
+          Text('Switch for 5-band-code'),
            Switch(
             value: switchOn,
-            onChanged: (bool state) {
-              setState(() { switchOn = state; });
-            },
+            onChanged: (bool state) { setState(() { switchOn = state; }); },
             activeColor: Color(0xff58BF9F),
           ),
           Row(
@@ -38,7 +66,16 @@ class ResistorState extends State<Resistor> {
                 child: Row(
                   children: <Widget>[
                     SizedBox(width: 28),
-                    Stripe(stripe: 1, color: Colors.green[900]),
+                    SizedBox(
+                      height: 64.0,
+                      width: 10.0,
+                      child: FlatButton(
+                        shape: RoundedRectangleBorder(),
+                        color: first,
+                        onPressed: () { changeColor(context, 'first', first); },
+                        child: Text(''),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -49,11 +86,41 @@ class ResistorState extends State<Resistor> {
                 child: Row(
                   children: <Widget>[
                     SizedBox(width: 10),
-                    Stripe(stripe: 2, color: Colors.deepOrange),
+                    SizedBox(
+                      height: 64.0,
+                      width: 10.0,
+                      child: FlatButton(
+                        shape: RoundedRectangleBorder(),
+                        color: second,
+                        onPressed: () { changeColor(context, 'second', second); },
+                        child: Text(''),
+                      ),
+                    ),
                     SizedBox(width: 10.0),
-                    Stripe(stripe: 3, color: Colors.yellow),
+                    //Stripe(stripe: 3, color: switchOn ? third : multiplierColor),
+                    SizedBox(
+                      height: 64.0,
+                      width: 10.0,
+                      child: FlatButton(
+                        shape: RoundedRectangleBorder(),
+                        color: switchOn ? third : multiplierColor,
+                        onPressed: () { changeColor(context, switchOn ? 'third' : 'fourth', switchOn ? third : multiplierColor); },
+                        child: Text(''),
+                      ),
+                    ),
                     SizedBox(width: 15.0),
-                    switchOn ? Stripe(stripe: 4, color: Colors.pink) : SizedBox(width: 10.0),
+                    switchOn 
+                      ? SizedBox(
+                          height: 64.0,
+                          width: 10.0,
+                          child: FlatButton(
+                            shape: RoundedRectangleBorder(),
+                            color: switchOn ? multiplierColor : null,
+                            onPressed: () { changeColor(context, 'fourth', multiplierColor); },
+                            child: Text(''),
+                          ),
+                        ) 
+                      : SizedBox(width: 10.0),
                   ],
                 ),
               ),
@@ -67,13 +134,24 @@ class ResistorState extends State<Resistor> {
                 child: Row(
                   children: <Widget>[
                     SizedBox(width: 10),
-                    Stripe(stripe: switchOn ? 5 : 4, color: Colors.blue[700]),
+                    SizedBox(
+                      height: 64.0,
+                      width: 10.0,
+                      child: FlatButton(
+                        shape: RoundedRectangleBorder(),
+                        color: toleranceColor,
+                        onPressed: () { changeColor(context, 'fifth', toleranceColor); },
+                        child: Text(''),
+                      ),
+                    ), 
                     SizedBox(width: 10.0), 
                   ],
                 ),
               ),
             ],
           ),
+          SizedBox(height: 40.0),
+          Text(result),
         ],
       ),
     );
