@@ -39,7 +39,7 @@ class ColorPicker extends StatelessWidget {
         color: Color(0xfff1f2f6),
         child: Column(
           children: <Widget>[
-            Text('Stripe $stripe', style: TextStyle(fontSize: 30.0)),
+            Text('$stripe stripe is...', style: TextStyle(fontSize: 30.0)),
             SizedBox(height: 30.0),
             Wrap(
               spacing: 8.0,

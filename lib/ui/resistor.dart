@@ -22,16 +22,18 @@ class ResistorState extends State<Resistor> {
       MaterialPageRoute(builder: (context) => ColorPicker(stripe: stripe)),
     );
     setState(() { 
-      if(color == first) {
-        first = stripeCol;
-      } else if(color == second) {
-        second = stripeCol;
-      } else if(color == third) {
-        third = stripeCol;
-      } else if(color == multiplierColor) {
-        multiplierColor = stripeCol;
-      } else if(color == toleranceColor) {
-        toleranceColor = stripeCol;
+      if(stripeCol != null) {
+        if(color == first) {
+          first = stripeCol;
+        } else if(color == second) {
+          second = stripeCol;
+        } else if(color == third) {
+          third = stripeCol;
+        } else if(color == multiplierColor) {
+          multiplierColor = stripeCol;
+        } else if(color == toleranceColor) {
+          toleranceColor = stripeCol;
+        }
       }
     });
  }  
@@ -41,8 +43,6 @@ class ResistorState extends State<Resistor> {
     Color resistorBackground = Color(0xffBDC581);
     var no3 = switchOn ? third : null;
     var result = getData(first, second, no3, multiplierColor, toleranceColor);
-    
-    
     
     return Container(
       child: Column(
@@ -72,7 +72,7 @@ class ResistorState extends State<Resistor> {
                       child: FlatButton(
                         shape: RoundedRectangleBorder(),
                         color: first,
-                        onPressed: () { changeColor(context, 'first', first); },
+                        onPressed: () { changeColor(context, 'First', first); },
                         child: Text(''),
                       ),
                     ),
@@ -92,19 +92,18 @@ class ResistorState extends State<Resistor> {
                       child: FlatButton(
                         shape: RoundedRectangleBorder(),
                         color: second,
-                        onPressed: () { changeColor(context, 'second', second); },
+                        onPressed: () { changeColor(context, 'Second', second); },
                         child: Text(''),
                       ),
                     ),
                     SizedBox(width: 10.0),
-                    //Stripe(stripe: 3, color: switchOn ? third : multiplierColor),
                     SizedBox(
                       height: 64.0,
                       width: 10.0,
                       child: FlatButton(
                         shape: RoundedRectangleBorder(),
                         color: switchOn ? third : multiplierColor,
-                        onPressed: () { changeColor(context, switchOn ? 'third' : 'fourth', switchOn ? third : multiplierColor); },
+                        onPressed: () { changeColor(context, 'Third', switchOn ? third : multiplierColor); },
                         child: Text(''),
                       ),
                     ),
@@ -116,7 +115,7 @@ class ResistorState extends State<Resistor> {
                           child: FlatButton(
                             shape: RoundedRectangleBorder(),
                             color: switchOn ? multiplierColor : null,
-                            onPressed: () { changeColor(context, 'fourth', multiplierColor); },
+                            onPressed: () { changeColor(context, 'Fourth', multiplierColor); },
                             child: Text(''),
                           ),
                         ) 
@@ -140,7 +139,7 @@ class ResistorState extends State<Resistor> {
                       child: FlatButton(
                         shape: RoundedRectangleBorder(),
                         color: toleranceColor,
-                        onPressed: () { changeColor(context, 'fifth', toleranceColor); },
+                        onPressed: () { changeColor(context, switchOn ? 'Fifth' : "Fourth", toleranceColor); },
                         child: Text(''),
                       ),
                     ), 

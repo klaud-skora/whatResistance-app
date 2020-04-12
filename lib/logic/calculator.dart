@@ -33,16 +33,16 @@ extension LineExtention on Line {
   };
 
   static final numbers = {
-    Line.black: '1',
-    Line.brown: '2',
-    Line.red: '3',
-    Line.orange: '4',
-    Line.yellow: '5',
-    Line.green: '6',
-    Line.blue: '7',
-    Line.violet: '8',
-    Line.grey: '9',
-    Line.white: null,
+    Line.black: '',
+    Line.brown: '1',
+    Line.red: '2',
+    Line.orange: '3',
+    Line.yellow: '4',
+    Line.green: '5',
+    Line.blue: '6',
+    Line.violet: '7',
+    Line.grey: '8',
+    Line.white: '9',
     Line.gold: null,
     Line.silver: null,
   };
@@ -104,7 +104,7 @@ String getData(first, second, third, multiplier, tolerance) {
   String no1, no2, no3, unit, toler;
   int multer;
   for(Line line in Line.values) {
-    if(third == null) no3 = '0';
+    if(third == null) no3 = '';
     else if(line.color == third) no3 = line.number;
 
     if(line.color == first) no1 =  line.number;
@@ -116,6 +116,7 @@ String getData(first, second, third, multiplier, tolerance) {
     if(line.color == tolerance) toler = line.tolerance;
   }
   if(no1 == null || no2 == null || no3 == null || multer == null) return 'Wrong color';
+
   var resistance = int.parse(no1 + no2 + no3) * multer;
   
   return '${resistance.toString()}$unit $toler';
