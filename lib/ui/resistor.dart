@@ -26,7 +26,7 @@ class ResistorState extends State<Resistor> {
             child: Row(
               children: <Widget>[
                 SizedBox(width: 12),
-                Stripe(color: Colors.green[900]),
+                Stripe(stripe: 1, color: Colors.green[900]),
                 SizedBox(width: 7.0), 
               ],
             ),
@@ -38,9 +38,9 @@ class ResistorState extends State<Resistor> {
             child: Row(
               children: <Widget>[
                 SizedBox(width: 10),
-                Stripe(color: Colors.deepOrange),
+                Stripe(stripe: 2, color: Colors.deepOrange),
                 SizedBox(width: 10.0),
-                Stripe(color: Colors.yellow),
+                Stripe(stripe: 3, color: Colors.yellow),
               ],
             ),
           ),
@@ -54,7 +54,7 @@ class ResistorState extends State<Resistor> {
             child: Row(
               children: <Widget>[
                 SizedBox(width: 10),
-                Stripe(color: Colors.blue[700]),
+                Stripe(stripe: 4, color: Colors.blue[700]),
                 SizedBox(width: 10.0), 
               ],
             ),
