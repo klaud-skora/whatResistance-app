@@ -47,7 +47,7 @@ class ResistorState extends State<Resistor> {
     return Container(
       child: Column(
         children: <Widget>[
-          Text('Switch for 5-band-code'),
+          Text('Switch for 5-band-code', style: TextStyle(fontWeight: FontWeight.bold)),
            Switch(
             value: switchOn,
             onChanged: (bool state) { setState(() { switchOn = state; }); },

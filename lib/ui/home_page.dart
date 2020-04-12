@@ -11,7 +11,6 @@ class HomePageState extends State<HomePage> {
   
   @override
   Widget build(BuildContext context) {
-    // Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text('WHAT RESISTANCE?'),
@@ -31,10 +30,10 @@ class HomePageState extends State<HomePage> {
                 fontWeight: FontWeight.bold
               ),
             ),
-            SizedBox(height: 12.0),
-            Text('Choose proper colors relevant to your resistor right below'),
+            SizedBox(height: 42.0),
+            Text('Choose proper colors relevant to your resistor just right below. Pick them wisely to get preper result. \n\n For no data about chosen color there\'s "Wrong color" statement instead of calculated resistance.'),
             Container(
-              padding: const EdgeInsets.only(top: 60.0),
+              padding: const EdgeInsets.only(top: 100.0),
               child: Resistor(),
             ),
           ],

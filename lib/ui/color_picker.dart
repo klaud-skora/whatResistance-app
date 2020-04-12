@@ -9,8 +9,7 @@ class Dot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  SizedBox(
-      width: 50,
-      height: 50,
+      width: 50, height: 50,
       child: FlatButton(
         shape: CircleBorder(),
         color: color,
