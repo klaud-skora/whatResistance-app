@@ -36,16 +36,16 @@ extension LineExtention on Line {
   };
 
   static final multipliers = {
-    Line.black: 1,
-    Line.brown: 10,
-    Line.red: 100,
-    Line.orange: 1,
-    Line.yellow: 10,
-    Line.green: 100,
-    Line.blue: 1,
-    Line.violet: 10,
-    Line.grey: 100,
-    Line.white: 1,
+    Line.black: 1.0,
+    Line.brown: 10.0,
+    Line.red: 100.0,
+    Line.orange: 1.0,
+    Line.yellow: 10.0,
+    Line.green: 100.0,
+    Line.blue: 1.0,
+    Line.violet: 10.0,
+    Line.grey: 100.0,
+    Line.white: 1.0,
     Line.gold: 0.1,
     Line.silver: 0.01,
   };
@@ -77,14 +77,14 @@ getData(Color color, String type) {
   return null;
 }
 
-String getNumber(String no1, String no2, String no3) {
-  return no1 + no2 + no3;
+int getNumber(String no1, String no2, String no3) {
+  if(no1 == null || no2 == null || no3 == null) return null;
+  return int.parse(no1 + no2 + no3);
 }
 
-String getResistance(n1, n2, n3, multiplier, unit, tolerance) {
-  if(n1 == null || n2 == null || n3 == null) return 'Wrong color';
-  String numberStr = getNumber(n1, n2, n3);
-  int number = int.parse(numberStr); 
+String getResistance(int number, double multiplier, String unit, String tolerance) {
+  if (number == null) return 'Wrong color';
+ 
   double resistance = number * multiplier;
   String value = resistance.round().toString();
   return value + unit + tolerance;
