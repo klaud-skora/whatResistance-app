@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/logic/calculator.dart';
+import 'color_line_extension.dart';
 
 class Dot extends StatelessWidget {
 

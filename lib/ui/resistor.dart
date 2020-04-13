@@ -18,8 +18,7 @@ class ResistorState extends State<Resistor> {
 
   changeColor(BuildContext context, stripe, color) async {
     final stripeCol = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => ColorPicker(stripe: stripe)),
+      context, MaterialPageRoute(builder: (context) => ColorPicker(stripe: stripe)),
     );
     setState(() { 
       if(stripeCol != null) {
@@ -41,8 +40,14 @@ class ResistorState extends State<Resistor> {
   @override
   Widget build(BuildContext context) {
     Color resistorBackground = Color(0xffBDC581);
-    var no3 = switchOn ? third : null;
-    var result = getData(first, second, no3, multiplierColor, toleranceColor);
+    String no1 = getData(first, 'number');
+    String no2 = getData(second, 'number');
+    String no3 = switchOn ? getData(third, 'number') : '';
+    double multiplier = getData(multiplierColor, 'multiplier');
+    String unit =  getData(multiplierColor, 'unit');
+    String tolerance = getData(toleranceColor, 'tolerance');
+    
+    String resistance = getResistance(no1, no2, no3, multiplier, unit, tolerance);
     
     return Container(
       child: Column(
@@ -132,7 +137,7 @@ class ResistorState extends State<Resistor> {
                 width: 50.0,
                 child: Row(
                   children: <Widget>[
-                    SizedBox(width: 10),
+                    SizedBox(width: 20),
                     SizedBox(
                       height: 64.0,
                       width: 10.0,
@@ -150,7 +155,7 @@ class ResistorState extends State<Resistor> {
             ],
           ),
           SizedBox(height: 40.0),
-          Text(result),
+          Text(resistance),
         ],
       ),
     );

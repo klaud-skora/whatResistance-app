@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../ui/color_line_extension.dart';
+import '../ui/tolerance_extension.dart';
+import '../ui/unit_extension.dart';
 
 enum Line { 
   black,
@@ -17,23 +20,8 @@ enum Line {
 
 extension LineExtention on Line {
 
-  static final colors = {
-    Line.black: Color(0xff000000),
-    Line.brown: Color(0xff795548),
-    Line.red: Color(0xfff44336),
-    Line.orange: Color(0xffff9800),
-    Line.yellow: Color(0xffffeb3b),
-    Line.green: Color(0xff1b5e20),
-    Line.blue: Color(0xff0d47a1),
-    Line.violet: Color(0xff6d214f),
-    Line.grey: Color(0xff9e9e9e),
-    Line.white: Color(0xffffffff),
-    Line.gold: Color(0xffeab543),
-    Line.silver: Color(0xff757575),
-  };
-
   static final numbers = {
-    Line.black: '',
+    Line.black: '0',
     Line.brown: '1',
     Line.red: '2',
     Line.orange: '3',
@@ -56,68 +44,48 @@ extension LineExtention on Line {
     Line.green: 100,
     Line.blue: 1,
     Line.violet: 10,
-    Line.grey: null,
-    Line.white: null,
-    Line.gold: null,
-    Line.silver: null,
-  };
-
-  static final units = {
-    Line.black: 'Ω',
-    Line.brown: 'Ω',
-    Line.red: 'Ω',
-    Line.orange: 'KΩ',
-    Line.yellow: 'KΩ',
-    Line.green: 'KΩ',
-    Line.blue: 'MΩ',
-    Line.violet: 'MΩ',
-    Line.grey: null,
-    Line.white: null,
-    Line.gold: null,
-    Line.silver: null,
-  };
-
-  static final tolerances = {
-    Line.black: '',
-    Line.brown: '±1%',
-    Line.red: '±2%',
-    Line.orange: '',
-    Line.yellow: '',
-    Line.green: '±0.5%',
-    Line.blue: '±0.25%',
-    Line.violet: '±0.10%',
-    Line.grey: '±0.05%',
-    Line.white: '',
-    Line.gold: '±5%',
-    Line.silver: '±10%',
+    Line.grey: 100,
+    Line.white: 1,
+    Line.gold: 0.1,
+    Line.silver: 0.01,
   };
 
   String get number => numbers[this];
-  int get multiplier => multipliers[this];
-  String get unit => units[this];
-  String get tolerance => tolerances[this];
-  Color get color => colors[this];
-
+  double get multiplier => multipliers[this];
+  
 }
 
-String getData(first, second, third, multiplier, tolerance) {
-  String no1, no2, no3, unit, toler;
-  int multer;
+getData(Color color, String type) {
   for(Line line in Line.values) {
-    if(third == null) no3 = '';
-    else if(line.color == third) no3 = line.number;
-
-    if(line.color == first) no1 =  line.number;
-    if(line.color == second) no2 = line.number;
-    if(line.color == multiplier) {
-      multer = line.multiplier;
-      unit = line.unit;
+    if(color == line.color){
+      switch(type) {
+        case 'number':
+          return line.number;
+          break;
+        case 'unit': 
+          return line.unit;
+          break;
+        case 'multiplier':
+          return line.multiplier;
+          break;
+        case 'tolerance':
+          return line.tolerance;
+          break;
+      }
     }
-    if(line.color == tolerance) toler = line.tolerance;
   }
-  if(no1 == null || no2 == null || no3 == null || multer == null) return 'Wrong color';
+  return null;
+}
 
-  var resistance = int.parse(no1 + no2 + no3) * multer;
-  
-  return '${resistance.toString()}$unit $toler';
+String getNumber(String no1, String no2, String no3) {
+  return no1 + no2 + no3;
+}
+
+String getResistance(n1, n2, n3, multiplier, unit, tolerance) {
+  if(n1 == null || n2 == null || n3 == null) return 'Wrong color';
+  String numberStr = getNumber(n1, n2, n3);
+  int number = int.parse(numberStr); 
+  double resistance = number * multiplier;
+  String value = resistance.round().toString();
+  return value + unit + tolerance;
 }
