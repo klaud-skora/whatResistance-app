@@ -31,8 +31,8 @@ extension LineExtention on Line {
     Line.violet: '7',
     Line.grey: '8',
     Line.white: '9',
-    Line.gold: null,
-    Line.silver: null,
+    Line.gold: '',
+    Line.silver: '',
   };
 
   static final multipliers = {
@@ -78,7 +78,7 @@ getData(Color color, String type) {
 }
 
 int getNumber(String no1, String no2, String no3) {
-  if(no1 == null || no2 == null || no3 == null) return null;
+  if(no1.length == 0 || no2.length == 0 || no3.length == 0) return null;
   return int.parse(no1 + no2 + no3);
 }
 
@@ -86,6 +86,6 @@ String getResistance(int number, double multiplier, String unit, String toleranc
   if (number == null) return 'Wrong color';
  
   double resistance = number * multiplier;
-  String value = resistance.round().toString();
+  String value = resistance.toString();
   return value + unit + tolerance;
 }

@@ -42,7 +42,7 @@ class ResistorState extends State<Resistor> {
     Color resistorBackground = Color(0xffBDC581);
     String no1 = getData(first, 'number');
     String no2 = getData(second, 'number');
-    String no3 = switchOn ? getData(third, 'number') : '';
+    String no3 = switchOn ? getData(third, 'number') : '0';
     int number = getNumber(no1, no2, no3);
     double multiplier = getData(multiplierColor, 'multiplier');
     String unit =  getData(multiplierColor, 'unit');
