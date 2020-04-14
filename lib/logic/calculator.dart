@@ -86,6 +86,6 @@ String getResistance(int number, double multiplier, String unit, String toleranc
   if (number == null) return 'Wrong color';
  
   double resistance = number * multiplier;
-  String value = resistance.toString();
+  String value = resistance.round() == resistance ? (resistance.round()).toString() : resistance.toString();
   return value + unit + tolerance;
 }

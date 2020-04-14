@@ -61,7 +61,7 @@ void main() {
     var result1 = getResistance(123, 1.0, 'Mom', '+/-5%');
 
     expect(result, '12.3om+/-5%');
-    expect(result1, '123.0Mom+/-5%');
+    expect(result1, '123Mom+/-5%');
   });
 
   test('test wrong args for getResistance', () {
