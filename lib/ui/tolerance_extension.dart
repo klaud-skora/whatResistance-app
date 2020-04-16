@@ -14,9 +14,8 @@ extension ToleranceExtension on Line {
     Line.grey: '±0.05%',
     Line.white: '',
     Line.gold: '±5%',
-    Line.silver: '±10%',
+    Line.silver: '±0.01%',
   };
 
-  String get tolerance => tolerances[this];
-
+  String get tolerance => tolerances[this];  
 }

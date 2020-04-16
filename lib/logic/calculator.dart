@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import '../ui/color_line_extension.dart';
 import '../ui/tolerance_extension.dart';
-import '../ui/unit_extension.dart';
 
 enum Line { 
   black,
@@ -55,37 +53,32 @@ extension LineExtention on Line {
   
 }
 
-getData(Color color, String type) {
+class Calculator {
+
+  Line first = Line.green;
+  Line second = Line.blue;
+  Line third = Line.black;
+  Line multiplier = Line.yellow;
+  Line tolerance = Line.grey;
+
+  Calculator(this.first, this.second, this.third, this.multiplier, this.tolerance);
+
+  int rawResistance() {
+    return int.parse(first.number + second.number + third.number); 
+  }
+  
+  double totalResistance() {
+    return ((rawResistance() * multiplier.multiplier) * 100).round() / 100;
+  }
+  
+  String toleranceInPercentage() {
+    return tolerance.tolerance;
+  }
+}
+
+Line getLine(color) {
   for(Line line in Line.values) {
-    if(color == line.color){
-      switch(type) {
-        case 'number':
-          return line.number;
-          break;
-        case 'unit': 
-          return line.unit;
-          break;
-        case 'multiplier':
-          return line.multiplier;
-          break;
-        case 'tolerance':
-          return line.tolerance;
-          break;
-      }
-    }
+    if(line.color == color) return line;
   }
   return null;
-}
-
-int getNumber(String no1, String no2, String no3) {
-  if(no1.length == 0 || no2.length == 0 || no3.length == 0) return null;
-  return int.parse(no1 + no2 + no3);
-}
-
-String getResistance(int number, double multiplier, String unit, String tolerance) {
-  if (number == null) return 'Wrong color';
- 
-  double resistance = number * multiplier;
-  String value = resistance.round() == resistance ? (resistance.round()).toString() : resistance.toString();
-  return value + unit + tolerance;
 }

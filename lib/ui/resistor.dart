@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/logic/calculator.dart';
 import 'color_picker.dart';
+import 'unit_extension.dart';
 
 class Resistor extends StatefulWidget {
   
@@ -40,16 +41,22 @@ class ResistorState extends State<Resistor> {
   @override
   Widget build(BuildContext context) {
     Color resistorBackground = Color(0xffBDC581);
-    String no1 = getData(first, 'number');
-    String no2 = getData(second, 'number');
-    String no3 = switchOn ? getData(third, 'number') : '0';
-    int number = getNumber(no1, no2, no3);
-    double multiplier = getData(multiplierColor, 'multiplier');
-    String unit =  getData(multiplierColor, 'unit');
-    String tolerance = getData(toleranceColor, 'tolerance');
+
+    Line firstLine = getLine(first);
+    Line secondLine = getLine(second);
+    Line thirdLine = switchOn ? getLine(third) : Line.silver;
+    Line multiplierLine = getLine(multiplierColor);
+    Line toleranceLine = getLine(toleranceColor);
     
-    String resistance = getResistance(number, multiplier, unit, tolerance);
-    
+    Calculator resistanceCalculator = Calculator(firstLine, secondLine, thirdLine, multiplierLine, toleranceLine);
+    double totalResistance = resistanceCalculator.totalResistance();
+    String unit = resistanceCalculator.multiplier.unit;
+    String resistance = totalResistance.round() == totalResistance 
+      ? totalResistance.round().toString() + unit 
+      : totalResistance.toString() + unit;
+
+    String tolerance = resistanceCalculator.toleranceInPercentage();
+
     return Container(
       child: Column(
         children: <Widget>[
@@ -156,7 +163,7 @@ class ResistorState extends State<Resistor> {
             ],
           ),
           SizedBox(height: 40.0),
-          Text(resistance),
+          Text('$resistance $tolerance'),
         ],
       ),
     );
