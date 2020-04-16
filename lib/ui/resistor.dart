@@ -44,18 +44,19 @@ class ResistorState extends State<Resistor> {
 
     Line firstLine = getLine(first);
     Line secondLine = getLine(second);
-    Line thirdLine = switchOn ? getLine(third) : Line.silver;
+    Line thirdLine = switchOn ? getLine(third) : Line.empty;
     Line multiplierLine = getLine(multiplierColor);
     Line toleranceLine = getLine(toleranceColor);
     
     Calculator resistanceCalculator = Calculator(firstLine, secondLine, thirdLine, multiplierLine, toleranceLine);
     double totalResistance = resistanceCalculator.totalResistance();
-    String unit = resistanceCalculator.multiplier.unit;
-    String resistance = totalResistance.round() == totalResistance 
-      ? totalResistance.round().toString() + unit 
-      : totalResistance.toString() + unit;
-
-    String tolerance = resistanceCalculator.toleranceInPercentage();
+    String unit = resistanceCalculator.multiplierLine.unit;
+    double tolerance = resistanceCalculator.toleranceInPercentage();
+    String toleranceWithSigns = tolerance != null 
+    ? ' ±' + ( tolerance == tolerance.round() ? tolerance.round() : tolerance).toString() + '%'
+    : '';
+    
+    String result = totalResistance != null ? (totalResistance == totalResistance.round() ? totalResistance.round() : totalResistance ).toString() + unit + toleranceWithSigns : 'Wrong color picked';
 
     return Container(
       child: Column(
@@ -163,7 +164,7 @@ class ResistorState extends State<Resistor> {
             ],
           ),
           SizedBox(height: 40.0),
-          Text('$resistance $tolerance'),
+          Text('$result'),
         ],
       ),
     );

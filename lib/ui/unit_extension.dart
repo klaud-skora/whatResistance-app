@@ -14,6 +14,7 @@ extension UnitExtension on Line {
     Line.white: 'GΩ',
     Line.gold: 'Ω',
     Line.silver: 'Ω',
+    Line.empty: 'Ω',
   };
 
   String get unit => units[this];

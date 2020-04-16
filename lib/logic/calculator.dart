@@ -13,7 +13,8 @@ enum Line {
   grey,
   white,
   gold,
-  silver
+  silver,
+  empty
 }
 
 extension LineExtention on Line {
@@ -31,6 +32,7 @@ extension LineExtention on Line {
     Line.white: '9',
     Line.gold: '',
     Line.silver: '',
+    Line.empty: '',
   };
 
   static final multipliers = {
@@ -46,6 +48,7 @@ extension LineExtention on Line {
     Line.white: 1.0,
     Line.gold: 0.1,
     Line.silver: 0.01,
+    Line.empty: 1.0,
   };
 
   String get number => numbers[this];
@@ -55,24 +58,32 @@ extension LineExtention on Line {
 
 class Calculator {
 
-  Line first = Line.green;
-  Line second = Line.blue;
-  Line third = Line.black;
-  Line multiplier = Line.yellow;
-  Line tolerance = Line.grey;
+  Line first;
+  Line second;
+  Line third;
+  Line multiplierLine;
+  Line tolerance;
 
-  Calculator(this.first, this.second, this.third, this.multiplier, this.tolerance);
+  Calculator(this.first, this.second, this.third, this.multiplierLine, this.tolerance);
 
   int rawResistance() {
+    List lines = [first, second, third];
+    for(var line in lines) {
+      if (line == Line.gold || line == Line.silver) return null;
+    }
     return int.parse(first.number + second.number + third.number); 
   }
-  
+
+  double multiplier() {
+    return multiplierLine.multiplier;
+  }
+   
   double totalResistance() {
-    return ((rawResistance() * multiplier.multiplier) * 100).round() / 100;
+    return rawResistance() != null ? ((rawResistance() * multiplier()) * 100).round() / 100 : null;
   }
   
-  String toleranceInPercentage() {
-    return tolerance.tolerance;
+  double toleranceInPercentage() {
+    return tolerance.tolerance == null ? null : tolerance.tolerance;
   }
 }
 

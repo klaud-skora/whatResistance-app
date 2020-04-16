@@ -1,72 +1,74 @@
-// import 'package:flutter/material.dart';
-// import 'package:test/test.dart';
-// import '../lib/logic/calculator.dart';
+import 'package:test/test.dart';
+import '../lib/logic/calculator.dart';
 
-// void main() {
-//   Color mockColor1 = Color(0xff1b5e20);
-//   Color mockColor2 =  Color(0xffeab543);
-//   String mockType = 'unit';
+void main() {
+  
 
-//   /* tests for getData */
-//   test('test case good args for getData', () {
-    
-//     var result = getData(mockColor1, 'number');
-//     var result2 = getData(mockColor2, 'number');
+  test('test case good args', () {
+    Calculator testCalc = Calculator(Line.green, Line.blue, Line.empty, Line.yellow, Line.grey);
+    int rawResistance = testCalc.rawResistance();
+    double multiplier = testCalc.multiplier();
+    double totalResistance = testCalc.totalResistance();
+    double tolerance = testCalc.toleranceInPercentage();
 
-//     expect(result, '5');
-//     expect(result2, '');
-//   });
+    expect(rawResistance, 56);
+    expect(multiplier, 10.0);
+    expect(totalResistance, 560);
+    expect(tolerance, 0.05);
+  });
 
-//   test('test undefined args for getData', () {
-//     var color, type;
-    
-//     var result = getData(color, type);
+  test('test wrong color for line first', () {
+    Calculator testFirst = Calculator( Line.gold, Line.blue, Line.empty, Line.yellow, Line.grey);
+    int rawResistance1 = testFirst.rawResistance();
+    double multiplier1 = testFirst.multiplier();
+    double totalResistance1 = testFirst.totalResistance();
+    double tolerance = testFirst.toleranceInPercentage();
 
-//     expect(result, null);
-//   });
+    expect(rawResistance1, null);
+    expect(multiplier1, 10.0);
+    expect(totalResistance1, null);
+    expect(tolerance, 0.05);
+  });
 
-//   test('wrong color for getData', () {
-//   var result = getData(Color(0xffeab583), 'number');
-//   var result2 = getData(Colors.red, mockType);
-//     expect(result, null);
-//     expect(result2, null);
-//   });
+  test('test wrong color for line second', () {
+    Calculator testSecond = Calculator( Line.gold, Line.blue, Line.empty, Line.yellow, Line.grey);
 
-//   test('test wrong type for getData', () {
-    
-//     var result = getData(mockColor1, 'power');
-//     var result2 = getData(mockColor1, '');
+    int rawResistance2 = testSecond.rawResistance();
+    double multiplier2 = testSecond.multiplier();
+    double totalResistance2 = testSecond.totalResistance();
+    double tolerance = testSecond.toleranceInPercentage();
 
-//     expect(result, null);
-//     expect(result2, null);
-//   });
+    expect(rawResistance2, null);
+    expect(multiplier2, 10.0);
+    expect(totalResistance2, null);
+    expect(tolerance, 0.05);
+  });
+  test('test wrong color for line third', () {
+    Calculator testThird = Calculator( Line.green, Line.blue, Line.gold, Line.yellow, Line.grey);
 
-//   /* tests for getNumber */
-//   test('good numbers', () {
-//     var result = getNumber('1', '2', '3');
-//     expect(result, 123);
-//   });
-//   test('empty args', () {
-//     var result1 = getNumber('', '2', '3');
-//     var result2 = getNumber('1', '', '3');
-//     var result3 = getNumber('1', '2', '');
-//     expect(result1, null);
-//     expect(result2, null);
-//     expect(result3, null);
-//   });
+    int rawResistance3 = testThird.rawResistance();
+    double multiplier3 = testThird.multiplier();
+    double totalResistance3 = testThird.totalResistance();
+    double tolerance = testThird.toleranceInPercentage();
 
-//   /* tests for getResistance */
-//   test('test good args', ()  {
-//     var result = getResistance(123, 0.1, 'om', '+/-5%');
-//     var result1 = getResistance(123, 1.0, 'Mom', '+/-5%');
+    expect(rawResistance3, null);
+    expect(multiplier3, 10.0);
+    expect(totalResistance3, null);
+    expect(tolerance, 0.05);
+  });
 
-//     expect(result, '12.3om+/-5%');
-//     expect(result1, '123Mom+/-5%');
-//   });
+  test('test no tolerance', () {
+    Calculator testTolerance = Calculator( Line.green, Line.blue, Line.empty, Line.yellow, Line.orange);
 
-//   test('test wrong args for getResistance', () {
-//     var result = getResistance(null, 1.0, 'Mom', '+/-5%');
+    int rawResistance = testTolerance.rawResistance();
+    double multiplier = testTolerance.multiplier();
+    double totalResistance = testTolerance.totalResistance();
+    double tolerance = testTolerance.toleranceInPercentage();
 
-//     expect(result, 'Wrong color');
-//   });
-// }
+    expect(rawResistance, 56);
+    expect(multiplier, 10.0);
+    expect(totalResistance, 560);
+    expect(tolerance, null);
+  });
+  
+}
