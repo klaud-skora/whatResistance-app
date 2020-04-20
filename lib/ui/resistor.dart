@@ -1,78 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/logic/calculator.dart';
+
+import 'color_line_extension.dart';
 import 'color_picker.dart';
-import 'unit_extension.dart';
 
 class Resistor extends StatefulWidget {
-  
   @override
   ResistorState createState() => ResistorState();
 }
 
 class ResistorState extends State<Resistor> {
-  bool switchOn = false;
-  Color first = Color(0xff1b5e20);
-  Color second = Color(0xff0d47a1);
-  Color third = Color(0xff6d214f);
-  Color multiplierColor = Color(0xffffeb3b); 
-  Color toleranceColor = Color(0xff9e9e9e);
+  Calculator resistanceCalculator = Calculator();
 
-  changeColor(BuildContext context, stripe, color) async {
-    final stripeCol = await Navigator.push(
-      context, MaterialPageRoute(builder: (context) => ColorPicker(stripe: stripe)),
+  changeColor(BuildContext context, Band band) async {
+    final line = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ColorPicker(band: band)),
     );
-    setState(() { 
-      if(stripeCol != null) {
-        if(color == first) {
-          first = stripeCol;
-        } else if(color == second) {
-          second = stripeCol;
-        } else if(color == third) {
-          third = stripeCol;
-        } else if(color == multiplierColor) {
-          multiplierColor = stripeCol;
-        } else if(color == toleranceColor) {
-          toleranceColor = stripeCol;
-        }
-      }
+    setState(() {
+      resistanceCalculator.setBandValue(band,  line);
     });
- }  
+  }
 
   @override
   Widget build(BuildContext context) {
     Color resistorBackground = Color(0xffBDC581);
 
-    Line firstLine = getLine(first);
-    Line secondLine = getLine(second);
-    Line thirdLine = switchOn ? getLine(third) : Line.silver;
-    Line multiplierLine = getLine(multiplierColor);
-    Line toleranceLine = getLine(toleranceColor);
-    
-    Calculator resistanceCalculator = Calculator(firstLine, secondLine, thirdLine, multiplierLine, toleranceLine);
-    double totalResistance = resistanceCalculator.totalResistance();
-    String unit = resistanceCalculator.multiplier.unit;
-    String resistance = totalResistance.round() == totalResistance 
-      ? totalResistance.round().toString() + unit 
-      : totalResistance.toString() + unit;
-
-    String tolerance = resistanceCalculator.toleranceInPercentage();
-
     return Container(
       child: Column(
         children: <Widget>[
-          Text('Switch for 5-band-code', style: TextStyle(fontWeight: FontWeight.bold)),
-           Switch(
-            value: switchOn,
-            onChanged: (bool state) { setState(() { switchOn = state; }); },
+          Text('Switch for 5-band-code',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          Switch(
+            value: resistanceCalculator.bandsCount == 5,
+            onChanged: (bool state) {
+              setState(() {
+                resistanceCalculator.setBandsCount(resistanceCalculator.bandsCount == 5 ? 4 : 5);
+              });
+            },
             activeColor: Color(0xff58BF9F),
           ),
           Row(
-            children: <Widget>[      
-              SizedBox(width: 80.0),    
+            children: <Widget>[
+              SizedBox(width: 80.0),
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  color: resistorBackground,        
+                  color: resistorBackground,
                 ),
                 height: 64.0,
                 width: 50.0,
@@ -84,8 +58,10 @@ class ResistorState extends State<Resistor> {
                       width: 10.0,
                       child: FlatButton(
                         shape: RoundedRectangleBorder(),
-                        color: first,
-                        onPressed: () { changeColor(context, 'First', first); },
+                        color: resistanceCalculator.first.color,
+                        onPressed: () {
+                          changeColor(context, Band.first);
+                        },
                         child: Text(''),
                       ),
                     ),
@@ -104,8 +80,10 @@ class ResistorState extends State<Resistor> {
                       width: 10.0,
                       child: FlatButton(
                         shape: RoundedRectangleBorder(),
-                        color: second,
-                        onPressed: () { changeColor(context, 'Second', second); },
+                        color: resistanceCalculator.second.color,
+                        onPressed: () {
+                          changeColor(context, Band.second);
+                        },
                         child: Text(''),
                       ),
                     ),
@@ -115,31 +93,35 @@ class ResistorState extends State<Resistor> {
                       width: 10.0,
                       child: FlatButton(
                         shape: RoundedRectangleBorder(),
-                        color: switchOn ? third : multiplierColor,
-                        onPressed: () { changeColor(context, 'Third', switchOn ? third : multiplierColor); },
+                        color: resistanceCalculator.third.color,
+                        onPressed: () {
+                          changeColor(context, Band.third);
+                        },
                         child: Text(''),
                       ),
                     ),
                     SizedBox(width: 15.0),
-                    switchOn 
-                      ? SizedBox(
-                          height: 64.0,
-                          width: 10.0,
-                          child: FlatButton(
-                            shape: RoundedRectangleBorder(),
-                            color: switchOn ? multiplierColor : null,
-                            onPressed: () { changeColor(context, 'Fourth', multiplierColor); },
-                            child: Text(''),
-                          ),
-                        ) 
-                      : SizedBox(width: 10.0),
+                    resistanceCalculator.bandsCount == 5
+                        ? SizedBox(
+                            height: 64.0,
+                            width: 10.0,
+                            child: FlatButton(
+                              shape: RoundedRectangleBorder(),
+                              color: resistanceCalculator.fourth.color,
+                              onPressed: () {
+                                changeColor(context, Band.fourth);
+                              },
+                              child: Text(''),
+                            ),
+                          )
+                        : SizedBox(width: 10.0),
                   ],
                 ),
               ),
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  color: resistorBackground,          
+                  color: resistorBackground,
                 ),
                 height: 64.0,
                 width: 50.0,
@@ -151,22 +133,23 @@ class ResistorState extends State<Resistor> {
                       width: 10.0,
                       child: FlatButton(
                         shape: RoundedRectangleBorder(),
-                        color: toleranceColor,
-                        onPressed: () { changeColor(context, switchOn ? 'Fifth' : "Fourth", toleranceColor); },
+                        color: resistanceCalculator.fifth.color,
+                        onPressed: () {
+                          changeColor(context, Band.fifth);
+                        },
                         child: Text(''),
                       ),
-                    ), 
-                    SizedBox(width: 10.0), 
+                    ),
+                    SizedBox(width: 10.0),
                   ],
                 ),
               ),
             ],
           ),
           SizedBox(height: 40.0),
-          Text('$resistance $tolerance'),
+          Text('${resistanceCalculator.totalResistance}'),
         ],
       ),
     );
   }
 }
-
