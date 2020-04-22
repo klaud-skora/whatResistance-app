@@ -28,7 +28,7 @@ class ResistorState extends State<Resistor> {
     if(result != null && resistanceCalculator.resistanceUnit.indexOf('K') != -1 ) result = result / 1000;
     if(result != null && resistanceCalculator.resistanceUnit.indexOf('M') != -1 ) result = result / 1000000;
 
-    String tolerance = resistanceCalculator.toleranceInPercentage == -1 ? '' : '±${resistanceCalculator.resistanceUnit}%';
+    String tolerance = resistanceCalculator.toleranceInPercentage == -1 ? '' : '±${resistanceCalculator.toleranceInPercentage}%';
     return Container(
       child: Column(
         children: <Widget>[
