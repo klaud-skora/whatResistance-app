@@ -19,12 +19,14 @@ void main() {
     int rawResistance = testFourBands.calculateRawResistance(first, second, third, fourth, fifth);
     double multiplier = testFourBands.calculateMultiplier(first, second, third, fourth, fifth);
     double totalResistance = testCalc.totalResistance;
+    double result = testCalc.adjustTotalToUnit;
     String unit = testFourBands.getUnit(first, second, third, fourth, fifth);
     dynamic tolerance = testFourBands.calculateTolerance(first, second, third, fourth, fifth);
-  
+
     expect(rawResistance, 56);
     expect(multiplier, 1.0);
     expect(totalResistance, 56.0);
+    expect(result, 56.0);
     expect(unit, 'Ω');
     expect(tolerance, 0.05);
     
@@ -36,12 +38,14 @@ void main() {
     int rawResistance = testFiveBands.calculateRawResistance(first, second, third, fourth, fifth);
     double multiplier = testFiveBands.calculateMultiplier(first, second, third, fourth, fifth);
     double totalResistance = testCalc.totalResistance;
+    double result = testCalc.adjustTotalToUnit;
     String unit = testFiveBands.getUnit(first, second, third, fourth, fifth);
     dynamic tolerance = testFiveBands.calculateTolerance(first, second, third, fourth, fifth);
 
     expect(rawResistance, 560);
     expect(multiplier, 10000.0);
     expect(totalResistance, 5600000.0);
+    expect(result, 5600.0);
     expect(unit, 'KΩ');
     expect(tolerance, 0.05);
     
@@ -55,12 +59,14 @@ void main() {
     int rawResistance = testFourBands.calculateRawResistance(first, second, third, fourth, fifth);
     double multiplier = testFourBands.calculateMultiplier(first, second, third, fourth, fifth);
     double totalResistance = testCalc.totalResistance;
+    double result = testCalc.adjustTotalToUnit;
     String unit = testFourBands.getUnit(first, second, third, fourth, fifth);
     dynamic tolerance = testFourBands.calculateTolerance(first, second, third, fourth, fifth);
   
     expect(rawResistance, 6);
     expect(multiplier, 1.0);
     expect(totalResistance, 6.0);
+    expect(result, 6.0);
     expect(unit, 'Ω');
     expect(tolerance, 0.05);
     
@@ -74,12 +80,14 @@ void main() {
     int rawResistance = testFiveBands.calculateRawResistance(first, second, third, fourth, fifth);
     double multiplier = testFiveBands.calculateMultiplier(first, second, third, fourth, fifth);
     double totalResistance = testCalc.totalResistance;
+    double result = testCalc.adjustTotalToUnit;
     String unit = testFiveBands.getUnit(first, second, third, fourth, fifth);
     dynamic tolerance = testFiveBands.calculateTolerance(first, second, third, fourth, fifth);
   
     expect(rawResistance, 60);
     expect(multiplier, 10000.0);
     expect(totalResistance, 600000.0);
+    expect(result, 600.0);
     expect(unit, 'KΩ');
     expect(tolerance, 0.05);
     
@@ -93,12 +101,14 @@ void main() {
     int rawResistance = testFourBands.calculateRawResistance(first, second, third, fourth, fifth);
     double multiplier = testFourBands.calculateMultiplier(first, second, third, fourth, fifth);
     double totalResistance = testCalc.totalResistance;
+    double result = testCalc.adjustTotalToUnit;
     String unit = testFourBands.getUnit(first, second, third, fourth, fifth);
     dynamic tolerance = testFourBands.calculateTolerance(first, second, third, fourth, fifth);
   
     expect(rawResistance, null);
     expect(multiplier, 1.0);
     expect(totalResistance, null);
+    expect(result, null);
     expect(unit, 'Ω');
     expect(tolerance, 0.05);
     
@@ -112,15 +122,16 @@ void main() {
     int rawResistance = testFiveBands.calculateRawResistance(first, second, third, fourth, fifth);
     double multiplier = testFiveBands.calculateMultiplier(first, second, third, fourth, fifth);
     double totalResistance = testCalc.totalResistance;
+    double result = testCalc.adjustTotalToUnit;
     String unit = testFiveBands.getUnit(first, second, third, fourth, fifth);
     dynamic tolerance = testFiveBands.calculateTolerance(first, second, third, fourth, fifth);
   
     expect(rawResistance, null);
     expect(multiplier, 10000.0);
     expect(totalResistance, null);
+    expect(result, null);
     expect(unit, 'KΩ');
     expect(tolerance, 0.05);
-    
   });
   
 }

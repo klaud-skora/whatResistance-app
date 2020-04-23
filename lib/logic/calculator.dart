@@ -80,6 +80,7 @@ abstract class RawBandResolver {
   double calculateMultiplier(Line first, Line second, Line third, Line fourth, Line fifth);
   dynamic calculateTolerance(Line first, Line second, Line third, Line fourth, Line fifth);
   String getUnit(Line first, Line second, Line third, Line fourth, Line fifth);
+  // double adjustTotalToUnit(Line first, Line second, Line third, Line fourth, Line fifth);
 }
 
 class FourBandResolver extends RawBandResolver {
@@ -103,6 +104,7 @@ class FourBandResolver extends RawBandResolver {
   dynamic calculateTolerance(Line first, Line second, Line third, Line fourth, Line fifth) {
     return fifth.tolerance;
   }
+
 }
 
 class FiveBandResolver extends RawBandResolver {
@@ -200,5 +202,12 @@ class Calculator {
 
   dynamic get toleranceInPercentage {
     return _resolver.calculateTolerance(_first, _second, _third, _fourth, _fifth);
+  }
+
+  double get adjustTotalToUnit {
+    if(totalResistance == null) return null;
+    if(resistanceUnit.indexOf('K') != -1 ) return totalResistance / 1000;
+    if(resistanceUnit.indexOf('M') != -1 ) return totalResistance / 1000000;
+    return totalResistance;
   }
 }

@@ -24,9 +24,7 @@ class ResistorState extends State<Resistor> {
   @override
   Widget build(BuildContext context) {
     Color resistorBackground = Color(0xffBDC581);
-    double result = resistanceCalculator.totalResistance;
-    if(result != null && resistanceCalculator.resistanceUnit.indexOf('K') != -1 ) result = result / 1000;
-    if(result != null && resistanceCalculator.resistanceUnit.indexOf('M') != -1 ) result = result / 1000000;
+    double result = resistanceCalculator.adjustTotalToUnit;
 
     String tolerance = resistanceCalculator.toleranceInPercentage == -1 ? '' : '±${resistanceCalculator.toleranceInPercentage}%';
     return Container(
